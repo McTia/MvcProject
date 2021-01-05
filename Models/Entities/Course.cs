@@ -1,4 +1,4 @@
-namespace MvcProject.Models.Entity
+namespace MvcProject.Models.Entities
 {
     public class Course
     {

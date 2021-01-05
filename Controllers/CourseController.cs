@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcProject.Models;
-using MvcProject.Models.Entity;
+using MvcProject.Models.Entities;
 
 namespace MvcProject.Controllers
 {

@@ -1,4 +1,4 @@
-using MvcProject.Models.Entity;
+using MvcProject.Models.Entities;
 
 public class CourseViewModel
     {
