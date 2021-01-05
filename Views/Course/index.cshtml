@@ -34,6 +34,10 @@
         }
         else {
             _courseTable = $('#courseGrid').DataTable({
+                searching: false, 
+                paging: false, 
+                info: false,
+                ordering: true,
                 columns: [
                     null,
                     null,
@@ -42,6 +46,5 @@
                 order: []
             });
         }
-        $('[data-toggle="tooltip"]').tooltip();
     }
 </script>
