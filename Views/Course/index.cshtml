@@ -1,0 +1,47 @@
+@model IList<CourseViewModel>
+<h1>@ViewData["Title"]</h1>
+<div class="container-fluid">
+    <table id="courseGrid" class="table table-light">
+        <thead>
+            <tr>
+                <th>Autore</th>
+                <th>Corso</th>
+                <th>Durata (min)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Author</td>
+                    <td>@course.Name</td>
+                    <td>@course.Duration</td>
+                </tr>
+            }
+           
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(function () {
+        setCourseDataTable();
+    });
+
+    function setCourseDataTable() {
+        if ($.fn.dataTable.isDataTable('#courseGrid')) {
+            _courseTable = $('#courseGrid').DataTable();
+        }
+        else {
+            _courseTable = $('#courseGrid').DataTable({
+                columns: [
+                    null,
+                    null,
+                    null
+                ],
+                order: []
+            });
+        }
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+</script>
