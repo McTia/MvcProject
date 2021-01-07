@@ -1,33 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MvcProject.Models;
-using MvcProject.Models.Entities;
+using MvcProject.Models.Services;
+using MvcProject.Models.Services.Interfaces;
 
 namespace MvcProject.Controllers
 {
     public class CourseController : Controller
-    {     
-        public IActionResult Index()
+    {
+        private readonly ICourseService _courseService;
+
+        public CourseController(ICourseService courseService)
         {
-            var firstCourse = new Course
-            {
-                Id = 1, Author = "Mattia", Name = "Matematica", Duration = 120
-            };
+            _courseService = courseService;
+        }
 
-            var secondCourse = new Course
-            {
-                Id = 2, Author = "Mattia", Name = "Geografia", Duration = 120
-            };
-
-            List<CourseViewModel> model = new List<CourseViewModel>();
-            model.Add(CourseViewModel.FromEntity(firstCourse));
-            model.Add(CourseViewModel.FromEntity(secondCourse));
+        public IActionResult Index()
+        {        
             ViewData["Title"] = "Guarda tutti i corsi";
+            List<CourseViewModel> model = _courseService.GetAllCourses();
+            
             return View(model);
         }      
     }
