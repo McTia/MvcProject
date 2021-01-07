@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using MvcProject.Models;
 using MvcProject.Models.Services;
 using MvcProject.Models.Services.Interfaces;
 
@@ -21,6 +23,49 @@ namespace MvcProject.Controllers
             List<CourseViewModel> model = _courseService.GetAllCourses();
             
             return View(model);
-        }      
+        } 
+        
+        public IActionResult Courses(TableInput option)
+        {
+            var alldata = _courseService.GetAllCourses();
+            var count = alldata.Count;
+
+            List<Object[]> result = alldata.Select(x =>
+            {
+                return new Object[] { x.Author, x.Name, x.Duration, x.Id };
+            }).ToList();
+
+            return Json(new { draw = option.draw, data = result, recordsTotal = count, recordsFiltered = count });
+        }
+
+        [HttpPost]
+        public IActionResult CourseAjax(CRUD_ACTION m, CourseViewModel model)
+        {
+
+            if (m != CRUD_ACTION.delete && !ModelState.IsValid)
+            {
+                string[] errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToArray();
+                return Json(new { errors = errors });
+            }
+
+
+            JsonResult result = Json("OK");
+            switch (m)
+            {
+                case CRUD_ACTION.create:
+                    //@TODO create
+                    break;
+
+                case CRUD_ACTION.update:
+                    //@TODO update
+                    break;
+                case CRUD_ACTION.delete:
+                    //@TODO delete
+                    break;
+                default:
+                    return Json(new { errors = new string[] { "Operazione non permessa" } });
+            }
+            return result;
+        }
     }
 }
