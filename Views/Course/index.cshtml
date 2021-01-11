@@ -1,7 +1,7 @@
 @model List<CourseViewModel>
 <h1>@ViewData["Title"]</h1>
 <div class="container-fluid">
-    <form asp-action="CourseAjax" method="post" role="form" novalidate>
+    <form asp-action="CourseAjax" method="post" role="form">
         <table id="courseGrid" class="table table-light">
             <thead>
                 <tr>
@@ -15,21 +15,34 @@
     </form>
 </div>
 
-@*<form id="course-modal-form" role="form">
-        <div id="course-modal" class="modal fade" role="dialog" aria-labelledby="simple" aria-hidden="true" style="display:none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"><span id="rh-action"></span> simple</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<form id="course-modal-form" role="form">
+    <div id="course-modal" class="modal fade" role="dialog" aria-labelledby="simple" aria-hidden="true" style="display:none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span id="rh-action"></span> prova</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <span>Autore</span>
+                                <input type="text" name="Author" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <span>Corso</span>
+                                <input type="text" name="Name" class="form-control" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label>Autore</label>
-                                    <input type="text" name="Author" class="form-control" />
-                                </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <span>Durata</span>
+                                <input type="text" name="Duration" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -40,13 +53,16 @@
                 </div>
             </div>
         </div>
-    </form>*@
+    </div>
+</form>
 
+@*@await Html.PartialAsync("~/Views/Course/_CourseInputModal.cshtml")*@
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/js/datatables.editable.artea.init.js"></script>
     <script>
-    $(function () {
+        $(function () {
         $('#courseGrid').EditableTable({
             paging: true,
             ordering: false,
@@ -56,12 +72,12 @@
             buttons: ["add", $.fn.EditableTable.CopyButton],
         },
         {
-            //editType: 'modal', modal: {
-            //    wrapper: '#course-modal'
-            //},
-            //deletemodal: {
-            //    animtype: "fade"
-            //}
+            editType: 'modal', modal: {
+                wrapper: '#course-modal'
+            },
+            deletemodal: {
+                animtype: "fade"
+            }
         });
     });
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvcProject.Models.Repo;
+using MvcProject.Models.Repo.Interfaces;
 using MvcProject.Models.Services;
 using MvcProject.Models.Services.Interfaces;
 
@@ -22,6 +24,7 @@ namespace MvcProject
         {
             services.AddControllersWithViews();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ICourseRepo, CourseRepo>();
             
             var mvcBuilder = services.AddControllersWithViews();
 #if DEBUG

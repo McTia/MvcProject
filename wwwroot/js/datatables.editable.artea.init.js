@@ -66,7 +66,7 @@
     };
 
     $.fn.EditableTable = function (tableOptions, intvars) {
-
+        debugger;
         var options = $.extend(true, {},
             $.fn.EditableTable.defaults, {
             addButton: {
@@ -442,6 +442,7 @@
             },
 
             callAjax: function (action, data, cb) {
+                debugger;
                 $.ajax({
                     type: vars.$form.attr('method'),
                     url: vars.$form.attr('action') + '?m=' + action,
@@ -475,6 +476,7 @@
             },
 
             rowError: function ($row, action, errors) {
+                debugger;
                 $.magnificPopup.open({
                     items: {
                         src: '<div id="dialog" class="modal-block">' +

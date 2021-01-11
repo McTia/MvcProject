@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MvcProject.Models;
 using MvcProject.Models.Services;
 using MvcProject.Models.Services.Interfaces;
+using MvcProject.Models.ViewModel;
 
 namespace MvcProject.Controllers
 {
@@ -53,14 +54,18 @@ namespace MvcProject.Controllers
             switch (m)
             {
                 case CRUD_ACTION.create:
-                    //@TODO create
+                    var insResult = _courseService.AddCourse(model);
+                    if(insResult == 1) // set it to 0
+                        return Json(new { errors = new string[] { "Inserimento non riuscito.." } });
                     break;
 
                 case CRUD_ACTION.update:
                     //@TODO update
                     break;
                 case CRUD_ACTION.delete:
-                    //@TODO delete
+                    var delResult = _courseService.RemoveCourse(model);
+                    if (delResult == 0)
+                        return Json(new { errors = new string[] { "Eliminazione non riuscita.." } });
                     break;
                 default:
                     return Json(new { errors = new string[] { "Operazione non permessa" } });
