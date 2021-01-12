@@ -19,7 +19,7 @@
         check: function (data, type, row) {
             if (data === null) return "";
             if (type === "display")
-                return '<div class="custom-control custom-checkbox"><input type="checkbox"' + ((data === false) ? "" : " checked ")+ 'class="custom-control-input"><label class="custom-control-label"></label></div>'
+                return '<div class="custom-control custom-checkbox"><input type="checkbox"' + ((data === false) ? "" : " checked ") + 'class="custom-control-input"><label class="custom-control-label"></label></div>'
             else return data;
         },
         singlefile: function (data, type, row) {
@@ -66,7 +66,6 @@
     };
 
     $.fn.EditableTable = function (tableOptions, intvars) {
-        debugger;
         var options = $.extend(true, {},
             $.fn.EditableTable.defaults, {
             addButton: {
@@ -228,7 +227,6 @@
                     })
                     .on('click', 'a.remove-row', function (e) {
                         e.preventDefault();
-
                         var $row = $(this).closest('tr');
                         $.fn.popItUp({
                             wrapper: "#dialog-delete",
@@ -269,7 +267,7 @@
                                 }
                             }
                         });*/
-                    /**------------- OLD ----------------------------------*/
+                        /**------------- OLD ----------------------------------*/
                     });
 
                 vars.dialog.$cancel.on('click', function (e) {
@@ -442,7 +440,6 @@
             },
 
             callAjax: function (action, data, cb) {
-                debugger;
                 $.ajax({
                     type: vars.$form.attr('method'),
                     url: vars.$form.attr('action') + '?m=' + action,
@@ -476,20 +473,24 @@
             },
 
             rowError: function ($row, action, errors) {
-                debugger;
-                $.magnificPopup.open({
-                    items: {
-                        src: '<div id="dialog" class="modal-block">' +
-                            '<section class="panel panel-danger panel-color">' +
-                            '<div class="panel-heading"><h2 class="panel-title">Error</h2></div>' +
-                            '<div class="panel-body"><div class="modal-wrapper">' +
-                            '<div class="modal-text"><ul>' + errors.map(function (error) {
-                                return $('<li>', { text: error }).html()
-                            }).join('') +
-                            '</ul></div></div></div></section></div>',
-                        type: 'inline'
-                    }
+                errors.map(function (error) {
+                    return alert(error);
                 });
+                
+                //
+                //$.magnificPopup.open({
+                //    items: {
+                //        src: '<div id="dialog" class="modal-block">' +
+                //            '<section class="panel panel-danger panel-color">' +
+                //            '<div class="panel-heading"><h2 class="panel-title">Error</h2></div>' +
+                //            '<div class="panel-body"><div class="modal-wrapper">' +
+                //            '<div class="modal-text"><ul>' + errors.map(function (error) {
+                //                return $('<li>', { text: error }).html()
+                //            }).join('') +
+                //            '</ul></div></div></div></section></div>',
+                //        type: 'inline'
+                //    }
+                //});
             },
 
             rowSetActionsEditing: function ($row) {

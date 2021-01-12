@@ -1,4 +1,4 @@
-@model List<CourseViewModel>
+@model ListCourseViewModel
 <h1>@ViewData["Title"]</h1>
 <div class="container-fluid">
     <form asp-action="CourseAjax" method="post" role="form">
@@ -15,70 +15,43 @@
     </form>
 </div>
 
-<form id="course-modal-form" role="form">
-    <div id="course-modal" class="modal fade" role="dialog" aria-labelledby="simple" aria-hidden="true" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><span id="rh-action"></span> prova</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <span>Autore</span>
-                                <input type="text" name="Author" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <span>Corso</span>
-                                <input type="text" name="Name" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <span>Durata</span>
-                                <input type="text" name="Duration" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light btn-sm waves-effect" data-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary btn-sm waves-effect waves-light btn-dt-confirm">Salva</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+@*<div id="modalError" class="modal fade text-left"></div>*@
 
-@*@await Html.PartialAsync("~/Views/Course/_CourseInputModal.cshtml")*@
+@await Html.PartialAsync("~/Views/Course/_CourseInputModal.cshtml", new CourseViewModel())
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/datatables.editable.artea.init.js"></script>
     <script>
         $(function () {
-        $('#courseGrid').EditableTable({
-            paging: true,
-            ordering: false,
-            dom: 'Btp',
-            ajax: '@Url.Action("Courses")',
-            rowId: 'Id',
-            buttons: ["add", $.fn.EditableTable.CopyButton],
-        },
-        {
-            editType: 'modal', modal: {
-                wrapper: '#course-modal'
+
+            //$.fn.EditableTable.defaults.rowButton.;
+            var ed_t = $('#courseGrid').EditableTable({
+                paging: true,
+                ordering: false,
+                dom: 'Bftp',
+                ajax: '@Url.Action("Courses")',
+                rowId: 'Id',
+                buttons: ["add"],
             },
-            deletemodal: {
-                animtype: "fade"
-            }
-        });
+                {
+                    editType: 'modal', modal: {
+                        wrapper: '#course-modal'
+                    },
+                    deletemodal: {
+                        animtype: "fade"
+                    },
+                    rowButton: {
+                        edit: '<a href="#" class="btn btn-primary on-default edit-row"><i class="mdi mdi-pencil"></i></a>'
+                    },
+                    //rowError: function ($row, action, errors) {
+                    //    var e = errors.map(function (error) {
+                    //        return $('<li>', { text: error }).html()
+                    //    }).join('');
+                    //    alert(e);                       
+                    //},
+            });
+            console.log(ed_t);
     });
 
 

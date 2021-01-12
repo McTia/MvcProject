@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace MvcProject.Models.ViewModel
+namespace MvcProject.Models.ViewModels
 {
     public class CourseViewModel
     {
@@ -14,6 +14,7 @@ namespace MvcProject.Models.ViewModel
         [Required(ErrorMessage = "Campo obbligatorio")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Campo obbligatorio")]
+        [Range(1, int.MaxValue, ErrorMessage = "La durata deve essere maggiore di 0")]
         public int Duration { get; set; }
 
         public static CourseViewModel FromDataRow(DataRow row)

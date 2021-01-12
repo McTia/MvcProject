@@ -11,5 +11,6 @@ namespace MvcProject.Models.Repo.Interfaces
         int AddCourse(string cmd);
         DataSet GetAllCourses(string query);
         int RemoveCourse(string cmd);
+        int UpdateCourse(string cmd);
     }
 }

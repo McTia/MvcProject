@@ -1,15 +1,13 @@
-﻿using MvcProject.Models.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MvcProject.Models.ViewModels;
+
 
 namespace MvcProject.Models.Services.Interfaces
 {
     public interface ICourseService
     {
         int AddCourse(CourseViewModel model);
-        List<CourseViewModel> GetAllCourses();
+        ListCourseViewModel GetAllCourses(int offset);
         int RemoveCourse(CourseViewModel model);
+        int UpdateCourse(CourseViewModel model);
     }
 }
