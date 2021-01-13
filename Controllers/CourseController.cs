@@ -19,13 +19,12 @@ namespace MvcProject.Controllers
         }
 
         public IActionResult Index()
-        {        
+        {
             ViewData["Title"] = "Guarda tutti i corsi";
-            ListCourseViewModel model = _courseService.GetAllCourses(0);
-            
+            var model = _courseService.GetAllCourses(0);
             return View(model);
-        } 
-        
+        }
+
         public IActionResult Courses(TableInput option)
         {
             var offset = option.start;
@@ -34,7 +33,7 @@ namespace MvcProject.Controllers
 
             List<Object[]> result = alldata.CourseList.Select(x =>
             {
-                return new Object[] { x.Author, x.Name, x.Duration, x.Id };     
+                return new Object[] { x.Author, x.Name, x.Duration, x.Id };
             }).ToList();
 
             return Json(new { draw = option.draw, data = result, recordsTotal = count, recordsFiltered = count });
@@ -56,13 +55,13 @@ namespace MvcProject.Controllers
             {
                 case CRUD_ACTION.create:
                     var insResult = _courseService.AddCourse(model);
-                    if(insResult == 0) // set it to 0
+                    if (insResult == 0) // set it to 0
                         return Json(new { errors = new string[] { "Inserimento non riuscito.." } });
                     break;
 
                 case CRUD_ACTION.update:
                     var upResult = _courseService.UpdateCourse(model);
-                    if (upResult == 0) // set it to 0
+                    if (upResult == 1) // set it to 0
                         return Json(new { errors = new string[] { "Aggiornamento non riuscito.." } });
                     break;
                 case CRUD_ACTION.delete:

@@ -246,7 +246,7 @@
                         });
                         /**------------- OLD ----------------------------------*/
                         /**
-                        $.magnificPopup.open({
+                        /*$.magnificPopup.open({
                             items: {
                                 src: options.dialog.wrapper,
                                 type: 'inline'
@@ -296,7 +296,10 @@
                     postdata += ("&" + options.tableOption.rowId + "=" + vars.rowid);
                 methods.callAjax(vars.modalAction, postdata, function (data) {
                     if (data.errors) {
-                        methods.rowError(null, vars.modalAction, data.errors);
+                        if(!options.customRowError)
+                            methods.rowError(null, vars.modalAction, data.errors);
+                        else
+                            options.customRowError.build(null, vars.modalAction, data.errors)
                     } else {
                         vars.datatable.draw();
                         vars.$addmodal.modal('hide');
@@ -515,6 +518,13 @@
             cancel: '<a href="#" class="btn btn-xs btn-secondary on-editing cancel-row" style="display:none;"><i class="mdi mdi mdi mdi-cancel"></i></a>',
             remove: '<a href="#" class="btn btn-xs btn-secondary on-default remove-row"><i class="mdi mdi mdi mdi-delete"></i></a>'
         },
+        customRowError: {
+            build: function($row, action, errors) {
+                errors.map(function (error) {
+                    return alert("SONO IL NUOVO ALERT: " + error);
+                });
+            }
+        },   
         dialog: {
             wrapper: '#dialog',
             cancelButton: '#dialogCancel',
