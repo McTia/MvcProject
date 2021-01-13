@@ -1,50 +1,105 @@
-@model List<CourseViewModel>
+@model ListCourseViewModel
 <h1>@ViewData["Title"]</h1>
 <div class="container-fluid">
-    <table id="courseGrid" class="table table-light">
-        <thead>
-            <tr>
-                <th>Autore</th>
-                <th>Corso</th>
-                <th>Durata (min)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var course in Model)
-            {
+    <form asp-action="CourseAjax" method="post" role="form">
+        <table id="courseGrid" class="table table-light">
+            <thead>
                 <tr>
-                    <td>@course.Author</td>
-                    <td>@course.Name</td>
-                    <td>@course.Duration</td>
+                    <th data-name="Author">Autore</th>
+                    <th data-name="Name">Corso</th>
+                    <th data-name="Duration">Durata</th>
+                    <th data-priority="2">Azioni</th>
                 </tr>
-            }
-           
-        </tbody>
-    </table>
+            </thead>
+        </table>
+    </form>
+    <div id="totalDuration" class="row">
+        <div id="totalDurationCourses">
+            <format-duration value="@Model.TotalCourseDuration"></format-duration>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ERRORE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMsg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script>
-    $(function () {
-        setCourseDataTable();
+
+@await Html.PartialAsync("~/Views/Course/_CourseInputModal.cshtml", new CourseViewModel())
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/datatables.editable.artea.init.js"></script>
+    <script>
+        $(function () {
+
+            //$.fn.EditableTable.defaults.rowButton.;
+            var ed_t = $('#courseGrid').EditableTable({
+                paging: true,
+                ordering: false,
+                dom: 'Bftp',
+                ajax: '@Url.Action("Courses")',
+                rowId: 'Id',
+                buttons: ["add"],
+            },
+                {
+                    editType: 'modal', modal: {
+                        wrapper: '#course-modal'
+                    },
+                    //deletemodal: {
+                    //    animtype: "fade"
+                    //},
+                    rowButton: {
+                        edit: '<a href="#" class="btn btn-primary on-default edit-row"><i class="mdi mdi-pencil"></i></a>'
+                    },
+                    customRowError: {
+                        build: function($row, action, errors) {
+                                errors.map(function (error) {
+                                    $("#errorMsg").text(error);
+                                });
+                                $("#errorModal").modal('show')
+                                .css({ 'z-index': '1052', 'color': 'red' }); // overlay + color
+                        }
+                    },
+            });
+            //console.log(ed_t);
     });
 
-    function setCourseDataTable() {
-        if ($.fn.dataTable.isDataTable('#courseGrid')) {
-            _courseTable = $('#courseGrid').DataTable();
-        }
-        else {
-            _courseTable = $('#courseGrid').DataTable({
-                searching: false, 
-                paging: false, 
-                info: false,
-                ordering: true,
-                columns: [
-                    null,
-                    null,
-                    null
-                ],
-                order: []
-            });
+
+    {
+        function setCourseDataTable() {
+            if ($.fn.dataTable.isDataTable('#courseGrid')) {
+                _courseTable = $('#courseGrid').DataTable();
+            }
+            else {
+                _courseTable = $('#courseGrid').DataTable({
+                    searching: false,
+                    paging: false,
+                    info: false,
+                    ordering: true,
+                    columns: [
+                        null,
+                        null,
+                        null
+                    ],
+                    order: []
+                });
+            }
         }
     }
-</script>
+    </script>
+}
+
+

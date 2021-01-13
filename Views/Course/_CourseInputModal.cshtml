@@ -1,0 +1,44 @@
+﻿@model CourseViewModel
+<form id="course-modal-form" role="form">
+    <div id="course-modal" class="modal fade" role="dialog" aria-labelledby="simple" aria-hidden="true" style="display:none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span id="rh-action"></span> prova</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="Author">Autore</label>
+                                <input type="text" asp-for="Author" class="form-control" />
+                                <span asp-validation-for="Author"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="Name">Corso</label>
+                                <input type="text" asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="Duration">Durata</label>
+                                <input type="text" asp-for="Duration" class="form-control" />
+                                <span asp-validation-for="Duration"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light btn-sm waves-effect" data-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-primary btn-sm waves-effect waves-light btn-dt-confirm">Salva</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
