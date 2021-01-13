@@ -27,9 +27,9 @@ namespace MvcProject
             services.AddTransient<ICourseRepo, CourseRepo>();
             
             var mvcBuilder = services.AddControllersWithViews();
-#if DEBUG
+            #if DEBUG
             mvcBuilder.AddRazorRuntimeCompilation();
-#endif
+            #endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
